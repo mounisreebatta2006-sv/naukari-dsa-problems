@@ -1,1 +1,37 @@
+// here we need to make the bst to left-skew bst means all the values should be on right side  in bst property we knows that root node should be the largest node and then 
+the remaining childrens should be less than root node right just follow the same and similar rules to solve the bst and flatten it 
 
+class Node
+{
+ int data;
+Node left;
+Node right;
+Node(int data)
+{
+this.data=data;
+this.left=null;
+this.right=null;
+}
+}
+class Solution
+{
+ static Node prev=null;
+static Node head=null;
+public static Node flattenbst(Node root)
+{
+  prev=null;
+  head=null;
+  inorder(root);
+  return head;
+}
+public static void inorder(Node root)
+{
+if(root==null) return ;
+inorder(root.right);
+if(prev==null) head=root;
+else prev.left=root;
+root.right=null;
+prev=root;
+inorder(root.left);
+}
+}
