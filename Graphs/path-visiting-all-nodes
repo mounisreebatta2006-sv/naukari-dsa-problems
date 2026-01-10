@@ -1,1 +1,75 @@
+Problem statement
+You are given a connected undirected unweighted graph of ‘N’ nodes and ‘M’ edges, such that there is only one undirected edge between any two nodes and no self-loop. Your task is to find the length of the shortest path that visits all ‘N’ nodes at least once.
+Note :
+1) Here length of the path refers to the number of edges in that path.
+2) You can start and stop at any node.
+3) You can visit any node 0 or more times.
+4) You can use any given edge 0 or more times.
+Sample Input 1 :
+2-inputs
+3
+3
+0 1
+0 2
+1 2
+4
+3
+0 1
+1 2
+2 3
+Sample Output 1 :
+2
+3
+Explanation of Sample Input 1 :
+Test Case 1 :  
+The given graph is shown below. 
+One possible shortest path that starts from node 0 ends at node 2 and visits all nodes is [0 - 1 - 2]
+The number of edges in this path is 2. 
+So the length of the shortest path that visits all nodes in the given graph will be 2.
 
+public class Solution {
+	public static int pathVisitingAllNodes(int n, ArrayList<ArrayList<Integer>> edgeList) {
+		ArrayList<ArrayList<Integer>>adjlist=new ArrayList<>();
+for(int i=0;i<n;i++)
+{
+adjlist.add(new ArrayList<>());
+}
+for(ArrayList<Integer>edge:edgeList)
+{
+int u=edge.get(0);
+int v=edge.get(1);
+adjlist.get(u).add(v);
+adjlist.get(v).add(u);
+}
+boolean[][] visited=new boolean[n][1<<n];
+Queue<int[]>queue=new LinkedList<>();
+int state=0;
+for(int i=0;i<n;i++)
+{
+  queue.offer(new int[]{i,1<<i});
+   visited[i][1<<i]=true;
+}
+while(!queue.isEmpty())
+{
+ int size=queue.size();
+for(int i=0;i<size;i++)
+{
+ int[] temp=queue.poll();
+int node=temp[0];
+int st=temp[1];
+if(st==(1<<n)-1) return state;
+for(int x:adjlist.get(node))
+{
+int nst=st||1<<x;
+if(!visited[x][nst])
+{
+  visited[x][nst]=true;
+ queue.offer(new int[]{x,nst});
+}
+}
+}
+state++;
+}
+return state;
+}
+}
