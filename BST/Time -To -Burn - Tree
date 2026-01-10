@@ -1,1 +1,113 @@
+Problem statement
+You have a binary tree of 'N' unique nodes and a Start node from where the tree will start to burn. Given that the Start node will always exist in the tree, your task is to print the time (in minutes) that it will take to burn the whole tree.
+
+
+
+It is given that it takes 1 minute for the fire to travel from the burning node to its adjacent node and burn down the adjacent node.
+
+
+
+For Example :
+For the given binary tree: [1, 2, 3, -1, -1, 4, 5, -1, -1, -1, -1]
+Start Node: 3
+
+    1
+   / \
+  2   3
+     / \
+    4   5
+
+Output: 2
+
+Explanation :
+In the zeroth minute, Node 3 will start to burn.
+
+After one minute, Nodes (1, 4, 5) that are adjacent to 3 will burn completely.
+
+After two minutes, the only remaining Node 2 will be burnt and there will be no nodes remaining in the binary tree. 
+
+So, the whole tree will burn in 2 minutes.
+
+import java.util.*;
+class TreeNode
+{
+ TreeNode left;
+TreeNode right;
+int data;
+TreeNode(int data)
+{
+this.left=null;
+this.right=null;
+this.data=data;
+}
+}
+class Solution
+{
+public static int timetoburn(TreeNode root,int start)
+{
+HashMap<TreeNode,TreeNode>map=new HashMap<>();
+TreeNode startnode=buildmap(root,map,start);
+Queue<TreeNode>queue=new LinkedList<>();
+HashSet<TreeNode>set=new HashSet<>();
+queue.offer(root);
+visited.add(root);
+int time=0;
+while(!queue.isEmpty())
+{
+ int size=queue.size();
+boolean burn=false;
+for(int i=0;i<size;i++)
+{
+TreeNode node=queue.poll();
+
+if(node.left!=null && !visited.contains(node.left))
+{
+burn=true;
+queue.offer(node.left);
+visited.add(node.left);
+}
+if(node.right!=null && !visited.contains(node.right))
+{
+burn=true;
+queue.offer(node.right);
+visited.add(node.right);
+}
+TreeNode parent=map.get(node)
+if(parent!=null && !visited.contains(parent))
+{
+burn=true;
+queue.offer(parent);
+visited.add(parent);
+}
+}
+if(burned) time++;
+
+}
+return time;
+}
+public static TreeNode buildmap(TreeNode root,HashMap<TreeNode,TreeNode>map,int start)
+{
+Queue<TreeNode>queue=new LinkedList<>();
+queue.offer(root);
+TreeNode start=null
+while(!queue.isEmpty())
+{
+TreeNode node=queue.poll();
+if(node.data==start) start=node;
+if(node.left!=null)
+{
+map.put(node.left,node);
+ queue.offer(node.left);
+}
+if(node.right!=null)
+{
+map.put(node.right,node);
+queue.offer(node.right);
+}
+}
+return start;
+}
+}
+
+
 
