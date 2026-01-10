@@ -6,4 +6,42 @@ A binary search tree (BST), also called an ordered or sorted binary tree, is a r
 Follow Up :
 Can you solve this in O(N) time and O(H)  space complexity?
 
+import java.util.*;
+class Node
+{
+int data;
+Node right;
+Node left;
+Node(int data)
+{
+this.data=data;
+this.right=null;
+this.left=null;
+
+}
+}
+class Solution
+{
+ static Node prev=null;
+ static Node head=null;
+public static Node flatten(Node root)
+{
+  prev=null;
+  head=null;
+  inorder(root);
+return head;
+
+}
+public static void inorder(Node root)
+{
+if(root==null) return ;
+inorder(root.left);
+if(prev==null) head=root;
+else prev.right=root;
+root.left=null;
+prev=root;
+inorder(root.right);
+}
+}
+
 
