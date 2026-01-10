@@ -1,1 +1,32 @@
+Maximum Depth in BST means the max height from the root to the leaf node here we have to find the longest path from root to leaf here it is similar to minimum depth only but 
+slightest change we can compute easily dimply through recursively 
 
+class Node
+{
+int data;
+Node left;
+Node right;
+Node(int data)
+{
+this.data=data;
+this.left=null;
+this.right=null;
+}
+}
+import java.util.*;
+class Solution
+{
+public static int maxDepth(Node root)
+{
+if(root==null) return 0;
+if(root.left==null)
+{
+return 1+maxDepth(root.right);
+}
+if(root.right==null)
+{
+return 1+maxDepth(root.left);
+}
+return 1+Math.max(maxDepth(root.left),maxDepth(root.left));
+}
+}
