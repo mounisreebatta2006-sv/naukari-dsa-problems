@@ -11,3 +11,51 @@ Sample input 1 :
 1 2 3 -1 -1 5 6 7 8 -1 -1 -1 -1 -1 -1
 Sample output 1 :
 7 5 8 6
+class Node
+{
+int data;
+Node right;
+Node left;
+Node(int data)
+{
+this.data=data;
+this.left=null;
+this.right=null;
+}
+}
+class Pair
+{
+int val;
+Node root;
+Pair(int val,Node root)
+{
+this.val=val;
+this.root=root;
+}
+}
+import java.util.*;
+class Solution
+{
+public static ArrayList<Integer> bottomview(Node root)
+{
+ArrayList<Integer>list=new ArrayList<>();
+Queue<Pair>queue=new LinkedList<>();
+HashMap<Integer,Integer>map=new HashMap<>();
+ queue.offer(new Pair(0,root));
+while(!queue.isEmpty())
+{
+Pair curr=queue.poll();
+Node node=curr.root;
+int h=curr.val;
+map.put(h,root.data);
+if(node.left!=null) queue.offer(new Pair(h-1,root.left));
+if(node.right!=null) queue.offer(new Pair(h+1,root.right));
+
+}
+for(int num:map.values())
+{
+list.add(num);
+}
+return list;
+}
+}
