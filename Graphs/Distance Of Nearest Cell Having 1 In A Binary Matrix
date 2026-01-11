@@ -16,3 +16,67 @@ then the output matrix will be
 3  2  1  0
 2  1  0  0
 1  0  0  1
+
+class Pair
+{
+int r;
+int c;
+int d;
+Pair(int r,int c,int d)
+{
+this.r=r;
+this.c=c;
+this.d=d;
+}
+}
+import java.util.*;
+class Solution
+{
+public static ArrayList<ArrayList<Integer>> nearest(ArrayList<ArrayList<Integer>>mat,int n,int m)
+{
+int[][] dist=new int[n][m];
+boolean[][] visited=new boolean[n][m];
+ArrayList<ArrayList<Integer>>result=new ArrayList<>();
+Queue<Pair>queue=new LinkedList<>();
+for(int i=0;i<n;i++)
+{
+for(int j=0;j<m;j++)
+{
+if(mat.get(i).get(j)==1)
+{
+queue.offer(new Pair(i,j,0));
+visited[i][j]=true;
+}
+}
+}
+int[][] dir={{1,0},{-1,0},{0,1},{0,-1}};
+while(!queue.isEmpty())
+{
+Pair curr=queue.poll();
+int r=curr.r;
+int c=curr.c;
+int di=curr.d;
+dist[r][c]=di;
+for(int[] d:dir)
+{
+int nr=r+d[0];
+int nc=c+d[1];
+if(nr>=0 && nr<n && nc>=0 && nc<m && !visited[nr][nc])
+{
+   queue.offer(new Pair(nr,nc,di+1));
+visited[nr][nc]=true;
+}
+}
+}
+for(int i=0;i<n;i++)
+{
+ArrayList<Integer>curr=new ArrayList<>();
+for(int j=0;j<m;j++)
+{
+  curr.add(dist[i][j]);
+}
+result.add(curr);
+}
+return result;
+}
+}
