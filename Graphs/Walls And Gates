@@ -1,0 +1,51 @@
+Problem statement
+You are given a matrix having ‘N’ rows and ‘M’ columns. Each cell of the matrix can only contain three values as given below:
+-1 -> It denotes a wall or an obstacle
+0  -> It denotes a gate
+2^31 - 1 =  2147483647 ( INF ) -> An infinitely large value  denotes the empty room.
+For each empty room (denoted by INF), you have to refill it with the distance to its nearest gate. If none of the gates is reachable from an empty room then the value ‘INF’ will remain as it is.
+Example
+For the matrix [[0,-1],[0,2147483647]] the updated matrix will be [[0,-1],[0,1]].
+Note
+The distance between two cells having their coordinates (x1,y1) and (x2,y2) are abs(x2-x1) + abs(y2-y1).
+code:
+import java.util.*;
+class Solution
+{
+public static int[][] wallsgates(int[][] a,int n,int m)
+{
+Queue<int[]>queue=new LinkedList<>();
+ boolean[][] visited=new boolean[n][m];
+for(int i=0;i<n;i++)
+{
+for(int j=0;j<m;j++)
+{
+if(a[i][j]==0)
+{
+queue.offer(new int[]{i,j,0});
+visited[i][j]=true;
+}
+}
+}
+int[][] dir={{1,0},{-1,0},{0,1},{0,-1}};
+while(!queue.isEmpty())
+{
+int[] curr=queue.poll();
+int r=curr[0];
+int c=curr[1];
+int di=curr[2];
+a[r][c]=di;
+for(int[] d:dir)
+{
+int nr=r+d[0];
+int nc=c+d[1];
+if(nr>=0 && nr<n && nc>=0 && nc<m && !visited[nr][nc] && a[nr][nc]!=-1)
+{
+queue.offer(new int[]{nr,nc,di+1});
+visited[nr][nc]=true;
+}
+}
+}
+return a;
+}
+]
